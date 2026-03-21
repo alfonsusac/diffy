@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "diffy - easily compare two text files",
   description: "Easily compare two text files and see the differences side by side powered by @pierre/diffs",
-
+  metadataBase: new URL("https://diffy.alfon.dev"),
 }
 
 

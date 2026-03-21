@@ -58,11 +58,24 @@ fn add(a: i32, b: i32) -> i32 {
     else setValueB(value)
   }
 
-  const [ settings, setSettings ] = useState<EditorSetting>({
+  const [ settings, _setSettings ] = useState<EditorSetting>({
     lang: "tsx",
     layout: "split",
     theme: "vesper"
   })
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const savedSettings = localStorage.getItem("editor-settings")
+    if (savedSettings) {
+      _setSettings(JSON.parse(savedSettings))
+    }
+  }, [])
+
+  function setSettings(settings: EditorSetting) {
+    _setSettings(settings)
+    localStorage.setItem("editor-settings", JSON.stringify(settings))
+  }
 
   return (
     <editorContext.Provider value={{
