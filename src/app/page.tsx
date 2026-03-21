@@ -2,6 +2,7 @@ import { cn } from "lazy-cn"
 import { DiffViewer, Editor, EditorContext } from "./page.client"
 import type { Metadata } from "next"
 import { ThemeSwitcher } from "./feature-themes"
+import type { ComponentProps } from "react"
 
 export const metadata: Metadata = {
   title: "diffy - easily compare two text files",
@@ -62,15 +63,15 @@ export default function Home() {
           <div className="max-w-3xl mx-auto p-8 flex gap-4">
 
             <div className="text-foreground-muted grow">
-              Made by alfon ∙ {[
-                { label: 'github', href: 'https://github.com/alfonsusac/diffy' },
-              ].map(({ label, href }) => {
-                return <a key={label} href={href}
-                  className="text-foreground-muted hover:text-foreground transition-colors"
-                >
-                  {label}
-                </a>
-              })}
+              Made by
+              {' '}
+              <FooterLink href="https://alfon.dev/">
+                alfon.dev
+              </FooterLink>
+              {' ∙ '}
+              <FooterLink href="https://github.com/alfonsusac/diffy">
+                sauce code
+              </FooterLink>
             </div>
 
             <div>
@@ -83,4 +84,8 @@ export default function Home() {
       </EditorContext>
     </div>
   )
+}
+
+function FooterLink(props: ComponentProps<"a">) {
+  return <a {...props} className={cn("text-foreground-muted hover:text-foreground transition-colors underline underline-offset-4 decoration-transparent hover:decoration-foreground/50", props.className)} />
 }
