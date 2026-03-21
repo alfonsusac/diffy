@@ -4,8 +4,8 @@ import { cn } from "lazy-cn"
 import { createContext, use, useEffect, useRef, useState, type ComponentProps } from "react"
 import { IconLucideCopy, IconLucideUpload, LucideDownload } from "./ui"
 import { MultiFileDiff } from "@pierre/diffs/react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui-select"
-import { languages, themes } from "./feature-settings"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui-select"
+import { languages, darkthemes, lightthemes, type CodeThemes } from "./feature-settings"
 import { TabList } from "@/tab/TabRoot"
 import { tab } from "@/tab/tab-primitives"
 
@@ -13,7 +13,7 @@ import { tab } from "@/tab/tab-primitives"
 type EditorSetting = {
   lang: typeof languages[ number ][ "value" ],
   layout: "split" | "inline",
-  theme: typeof themes[ number ]
+  theme: CodeThemes
 }
 
 const editorContext = createContext<
@@ -276,7 +276,7 @@ export function DiffViewer() {
               })
             }}
             tabNum={editor.settings.layout === "split" ? 0 : 1}
-            // tabNum={tabNum}
+          // tabNum={tabNum}
           />
         </SettingsItemGroup>
         <SettingsItemGroup>
@@ -286,23 +286,42 @@ export function DiffViewer() {
           } onValueChange={
             (value) => editor.setSettings({
               ...editor.settings,
-              theme: value as EditorSetting[ "theme" ]
+              theme: value as CodeThemes
             })
           }>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="Select a theme..." />
+              <SelectValue placeholder="Select a theme..." className="capitalize" />
             </SelectTrigger>
             <SelectContent>
-              {themes.toSorted(
-                (a, b) => a.localeCompare(b)
-              ).map((value) => {
-                return <SelectItem
-                  key={value}
-                  value={value}
-                >
-                  {value}
-                </SelectItem>
-              })}
+              <SelectGroup>
+                <SelectLabel>Dark Themes</SelectLabel>
+                {darkthemes.toSorted(
+                  (a, b) => a.localeCompare(b)
+                ).map((value) => {
+                  return <SelectItem
+                    className="capitalize"
+                    key={value}
+                    value={value}
+                  >
+                    {value.replaceAll('-', ' ')}
+                  </SelectItem>
+                })}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Light Themes</SelectLabel>
+                {lightthemes.toSorted(
+                  (a, b) => a.localeCompare(b)
+                ).map((value) => {
+                  return <SelectItem
+                    className="capitalize"
+                    key={value}
+                    value={value}
+                  >
+                    {value.replaceAll('-', ' ')}
+                  </SelectItem>
+                })}
+              </SelectGroup>
+
             </SelectContent>
           </Select>
         </SettingsItemGroup>

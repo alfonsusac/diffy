@@ -20,7 +20,7 @@ export const languages = [
 ] as const
 
 
-export const themes = [
+export const darkthemes = [
   "pierre-dark",
   "andromeeda",
   "aurora-x",
@@ -65,3 +65,27 @@ export const themes = [
   "vitesse-black",
   "vitesse-dark"
 ] as const
+
+export const lightthemes = [
+  "pierre-light",
+  "catppuccin-latte",
+  "everforest-light",
+  "github-light",
+  "github-light-default",
+  "github-light-high-contrast",
+  "gruvbox-light-hard",
+  "gruvbox-light-medium",
+  "gruvbox-light-soft",
+  "kanagawa-lotus",
+  "light-plus",
+  "material-theme-lighter",
+  "min-light",
+  "one-light",
+  "rose-pine-dawn",
+  "slack-ochin",
+  "snazzy-light",
+  "solarized-light",
+  "vitesse-light"
+] as const
+
+export type CodeThemes = typeof darkthemes[number] | typeof lightthemes[number]
