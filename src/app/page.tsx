@@ -31,7 +31,9 @@ export default function Home() {
               "transition-[opacity,translate] duration-500 delay-100",
               "starting:opacity-0 starting:translate-y-4",
             )}>
-              Easily compare two text files and see the differences side by side powered by <span className="font-mono text-foreground">@pierre/diffs</span>
+              Easily compare two text files and see the differences
+              side by side powered
+              by{' '}<a className="font-mono text-foreground underline underline-offset-8 decoration-foreground/5 hover:decoration-foreground-muted" href="https://diffs.com/" target="_blank">@pierre/diffs</a>
             </div>
           </header>
 
@@ -65,11 +67,11 @@ export default function Home() {
             <div className="text-foreground-muted grow">
               Made by
               {' '}
-              <FooterLink href="https://alfon.dev/">
+              <FooterLink href="https://alfon.dev/" target="_blank">
                 alfon.dev
               </FooterLink>
               {' ∙ '}
-              <FooterLink href="https://github.com/alfonsusac/diffy">
+              <FooterLink href="https://github.com/alfonsusac/diffy" target="_blank">
                 sauce code
               </FooterLink>
             </div>
