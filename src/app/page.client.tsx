@@ -4,10 +4,14 @@ import { cn } from "lazy-cn"
 import { createContext, use, useEffect, useRef, useState, type ComponentProps } from "react"
 import { IconLucideCopy, IconLucideUpload } from "./ui"
 import { MultiFileDiff } from "@pierre/diffs/react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui-select"
+import { languages, themes } from "./feature-settings"
+
 
 type EditorSetting = {
-  lang: "auto" | "tsx" | "js",
+  lang: typeof languages[ number ][ "value" ],
   layout: "split" | "inline",
+  theme: typeof themes[ number ]
 }
 
 const editorContext = createContext<
@@ -24,8 +28,30 @@ const editorContext = createContext<
 export function EditorContext(props: {
   children: React.ReactNode
 }) {
-  const [ valueA, setValueA ] = useState("")
-  const [ valueB, setValueB ] = useState("")
+  const [ valueA, setValueA ] = useState(`use std::io;
+
+fn main() {
+    println!("What is your name?");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).unwrap();
+    println!("Hello, {}", name.trim());
+}
+
+fn add(x: i32, y: i32) -> i32 {
+    return x + y;
+}`)
+  const [ valueB, setValueB ] = useState(`use std::io;
+
+fn main() {
+    println!("Enter your name:");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).expect("read error");
+    println!("Hello, {}!", name.trim());
+}
+
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}`)
 
   const setValue = (which: "a" | "b", value: string) => {
     if (which === "a") setValueA(value)
@@ -33,8 +59,9 @@ export function EditorContext(props: {
   }
 
   const [ settings, setSettings ] = useState<EditorSetting>({
-    lang: "auto",
+    lang: "tsx",
     layout: "split",
+    theme: "vesper"
   })
 
   return (
@@ -140,15 +167,15 @@ export function DiffViewer() {
       <MultiFileDiff
         className="border border-foreground/10 rounded-xl overflow-clip"
         oldFile={{
-          name: "Original.tsx",
+          name: `file.${ editor.settings.lang }`,
           contents: editor.valueA
         }}
         newFile={{
-          name: "Changed.tsx",
+          name: `file.${ editor.settings.lang }`,
           contents: editor.valueB
         }}
         options={{
-          theme: { dark: 'pierre-dark', light: 'pierre-light' },
+          theme: { dark: editor.settings.theme, light: 'pierre-light' },
           diffStyle: editor.settings.layout === "split" ? "split" : "unified",
         }}
       />
@@ -160,16 +187,29 @@ export function DiffViewer() {
       )}>
         <SettingsItemGroup>
           <SettingsItemLabel>Language</SettingsItemLabel>
-          <Select
-            value={editor.settings.lang}
-            onChange={(e) => editor.setSettings({
+          <Select value={
+            editor.settings.lang
+          } onValueChange={
+            (value) => editor.setSettings({
               ...editor.settings,
-              lang: e.target.value as EditorSetting[ "lang" ]
-            })}
-          >
-            <option value="auto">Auto-detect</option>
-            <option value="tsx">TypeScript</option>
-            <option value="js">JavaScript</option>
+              lang: value as EditorSetting[ "lang" ]
+            })
+          }>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Select a langauge..." />
+            </SelectTrigger>
+            <SelectContent>
+              {languages.toSorted(
+                (a, b) => a.label.localeCompare(b.label)
+              ).map(({ label, value }) => {
+                return <SelectItem
+                  key={value}
+                  value={value}
+                >
+                  {label}
+                </SelectItem>
+              })}
+            </SelectContent>
           </Select>
         </SettingsItemGroup>
         <SettingsItemGroup>
@@ -190,6 +230,34 @@ export function DiffViewer() {
             })}
           </TabBlock>
         </SettingsItemGroup>
+        <SettingsItemGroup>
+          <SettingsItemLabel>Theme</SettingsItemLabel>
+          <Select value={
+            editor.settings.theme
+          } onValueChange={
+            (value) => editor.setSettings({
+              ...editor.settings,
+              theme: value as EditorSetting[ "theme" ]
+            })
+          }>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Select a theme..." />
+            </SelectTrigger>
+            <SelectContent>
+              {themes.toSorted(
+                (a, b) => a.localeCompare(b)
+              ).map((value) => {
+                return <SelectItem
+                  key={value}
+                  value={value}
+                >
+                  {value}
+                </SelectItem>
+              })}
+            </SelectContent>
+          </Select>
+        </SettingsItemGroup>
+
       </div>
     </div>
   )
@@ -201,7 +269,7 @@ function SettingsItemGroup(props: ComponentProps<"div">) {
 function SettingsItemLabel(props: ComponentProps<"label">) {
   return <label {...props} className={cn("text-2xs text-foreground-muted")} />
 }
-function Select(props: ComponentProps<"select">) {
+{/* function Select(props: ComponentProps<"select">) {
   return <select {...props} className={cn(
     "bg-background-input text-sm text-foreground-muted hover:text-foreground",
     "border border-foreground/5",
@@ -210,7 +278,7 @@ function Select(props: ComponentProps<"select">) {
     "rounded p-2 h-full w-40 resize-none",
     props.className
   )} />
-}
+} */}
 function TabBlock(props: ComponentProps<"div">) {
   return <div {...props} className={cn(
     "bg-background-input rounded-xl text-sm p-1",
