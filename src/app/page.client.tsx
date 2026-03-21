@@ -2,7 +2,7 @@
 
 import { cn } from "lazy-cn"
 import { createContext, use, useEffect, useRef, useState, type ComponentProps } from "react"
-import { IconLucideCopy, IconLucideUpload } from "./ui"
+import { IconLucideCopy, IconLucideUpload, LucideDownload } from "./ui"
 import { MultiFileDiff } from "@pierre/diffs/react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui-select"
 import { languages, themes } from "./feature-settings"
@@ -116,22 +116,15 @@ export function Editor(props: {
     return () => input.removeEventListener("change", onChange)
   }, [])
 
+  const [ hovering, setHovering ] = useState(false)
+
   return (
     <div
       className="bg-background h-full w-full flex flex-col gap-2"
     >
-
       <div className="flex items-center px-3">
         <H2>{editors[ props.which ].label}</H2>
-        <button className={cn("button")}
-          onClick={() => {
-            const value = props.which === "a" ? editor.valueA : editor.valueB
-            navigator.clipboard.writeText(value)
-          }}
-        >
-          <IconLucideCopy />
-          Copy
-        </button>
+        <CopyButton text={props.which === "a" ? editor.valueA : editor.valueB} />
         <button className={cn("button")}
           onClick={() => inputRef.current?.click()}
         >
@@ -147,18 +140,58 @@ export function Editor(props: {
           accept=".txt,.md,.json,.js,.ts,.css,.html,.xml"
         />
       </div>
-      <textarea
-        value={props.which === "a" ? editor.valueA : editor.valueB}
-        onChange={(e) => editor.setValue(props.which, e.target.value)}
-        className={cn(
-          "bg-background-input",
-          "border border-foreground/5",
-          "focus-visible:outline-active-outline",
-          "focus-visible:outline-1",
-          "rounded p-3 h-full w-full resize-none font-mono text-sm"
-        )}
-        placeholder={`Paste ${ editors[ props.which ].label.toLowerCase() } content here...`}
-      />
+      <div className="relative h-full rounded border border-foreground/5 overflow-hidden"
+        onDragOver={(e) => {
+          e.preventDefault()
+          setHovering(true)
+        }}
+        onDragLeave={(e) => {
+          e.preventDefault()
+          setHovering(false)
+        }}
+        onDragEnd={(e) => {
+          e.preventDefault()
+          setHovering(false)
+        }}
+        onDrop={(e) => {
+          e.preventDefault()
+          setHovering(false)
+          const file = e.dataTransfer.files?.[ 0 ]
+          if (!file) return
+          const isText = file.type.startsWith("text/") || file.name.match(/\.(txt|md|json|js|ts|css|html|xml)$/i)
+          if (!isText) {
+            alert("Please drop a text file.")
+            return
+          }
+          file.text().then((text) => {
+            editor.setValue(props.which, text)
+          })
+        }}
+      >
+        {hovering &&
+          <div className={cn("absolute inset-0 bg-background-input backdrop-blur-sm starting:opacity-0 transition-opacity",
+            "flex items-center justify-center flex-col gap-2",
+          )}>
+            <LucideDownload className="text-foreground-muted/75" />
+            <div className="text-sm text-foreground-muted">
+              Drop a file here to load content
+            </div>
+          </div>
+        }
+        <textarea
+          value={props.which === "a" ? editor.valueA : editor.valueB}
+          onChange={(e) => editor.setValue(props.which, e.target.value)}
+          className={cn(
+            "bg-background-input",
+            "border border-foreground/5",
+            "focus-visible:outline-active-outline",
+            "focus-visible:outline-1",
+            "rounded p-3 h-full w-full resize-none font-mono text-sm",
+            "h-full",
+          )}
+          placeholder={`Paste ${ editors[ props.which ].label.toLowerCase() } content here...`}
+        />
+      </div>
     </div>
   )
 }
@@ -281,16 +314,6 @@ function SettingsItemGroup(props: ComponentProps<"div">) {
 function SettingsItemLabel(props: ComponentProps<"label">) {
   return <label {...props} className={cn("text-2xs text-foreground-muted")} />
 }
-{/* function Select(props: ComponentProps<"select">) {
-  return <select {...props} className={cn(
-    "bg-background-input text-sm text-foreground-muted hover:text-foreground",
-    "border border-foreground/5",
-    "focus-visible:outline-foreground-muted/50",
-    "focus-visible:outline-1",
-    "rounded p-2 h-full w-40 resize-none",
-    props.className
-  )} />
-} */}
 function TabBlock(props: ComponentProps<"div">) {
   return <div {...props} className={cn(
     "bg-background-input rounded-xl text-sm p-1",
@@ -306,13 +329,35 @@ function TabItem({ active, ...props }: ComponentProps<"button"> & {
     props.className,
   )} />
 }
-
-
 function H2(props: ComponentProps<'h2'>) {
   return (
     <h2 {...props} className={cn(
       "font-medium text-sm grow text-foreground-muted",
       props.className
     )} />
+  )
+}
+function CopyButton(props: {
+  text: string
+}) {
+  const buttonTextRef = useRef<HTMLButtonElement>(null)
+  return (
+    <button className={cn("button")}
+      onClick={(e) => {
+        navigator.clipboard.writeText(props.text)
+        if (!buttonTextRef.current) return
+        const originalText = buttonTextRef.current.textContent
+        buttonTextRef.current.textContent = "Copied!"
+        setTimeout(() => {
+          if (!buttonTextRef.current) return
+          buttonTextRef.current.textContent = originalText
+        }, 2000)
+      }}
+    >
+      <IconLucideCopy />
+      <span ref={buttonTextRef}>
+        Copy
+      </span>
+    </button >
   )
 }
