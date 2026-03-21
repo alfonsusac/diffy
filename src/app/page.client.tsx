@@ -79,12 +79,8 @@ fn add(a: i32, b: i32) -> i32 {
 
 
 const editors = {
-  a: {
-    label: "Original"
-  },
-  b: {
-    label: "Changed"
-  }
+  a: { label: "Original" },
+  b: { label: "Changed" }
 }
 
 export function Editor(props: {
