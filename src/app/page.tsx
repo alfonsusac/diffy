@@ -1,6 +1,7 @@
 import { cn } from "lazy-cn"
 import { DiffViewer, Editor, EditorContext } from "./page.client"
 import type { Metadata } from "next"
+import { ThemeSwitcher } from "./feature-themes"
 
 export const metadata: Metadata = {
   title: "diffy - easily compare two text files",
@@ -11,14 +12,15 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="min-w-screen min-h-screen">
+    <div className="min-h-screen">
       <EditorContext>
         <div className="min-h-screen flex flex-col gap-16 pb-20">
           <header className="max-w-3xl w-full mx-auto pt-8 sm:pt-20 flex flex-col gap-2 sm:gap-3 p-8">
             <h1 className={cn("font-mono text-4xl sm:text-5xl",
               "font-semibold tracking-tighter",
               "bg-gradient-to-t bg-clip-text text-transparent",
-              "from-zinc-500 to-zinc-50",
+              "from-[light-dark(var(--color-slate-500),var(--color-zinc-500))]",
+              "to-[light-dark(var(--color-slate-800),var(--color-zinc-50))]",
               "transition-[opacity,translate] duration-500",
               "starting:opacity-0 starting:translate-y-4"
             )}>
@@ -57,8 +59,9 @@ export default function Home() {
         </div>
 
         <footer className="border-t border-t-foreground/5 pb-20">
-          <div className="max-w-3xl mx-auto p-8 flex flex-col gap-4">
-            <div className="text-foreground-muted">
+          <div className="max-w-3xl mx-auto p-8 flex gap-4">
+
+            <div className="text-foreground-muted grow">
               Made by alfon ∙ {[
                 { label: 'github', href: 'https://github.com/alfonsusac/diffy' },
               ].map(({ label, href }) => {
@@ -69,6 +72,11 @@ export default function Home() {
                 </a>
               })}
             </div>
+
+            <div>
+              <ThemeSwitcher />
+            </div>
+
 
           </div>
         </footer>

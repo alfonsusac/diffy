@@ -6,6 +6,8 @@ import { IconLucideCopy, IconLucideUpload, LucideDownload } from "./ui"
 import { MultiFileDiff } from "@pierre/diffs/react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui-select"
 import { languages, themes } from "./feature-settings"
+import { TabList } from "@/tab/TabRoot"
+import { tab } from "@/tab/tab-primitives"
 
 
 type EditorSetting = {
@@ -182,7 +184,7 @@ export function Editor(props: {
           value={props.which === "a" ? editor.valueA : editor.valueB}
           onChange={(e) => editor.setValue(props.which, e.target.value)}
           className={cn(
-            "bg-background-input",
+            "bg-background-input/50",
             "border border-foreground/5",
             "focus-visible:outline-active-outline",
             "focus-visible:outline-1",
@@ -202,7 +204,7 @@ export function DiffViewer() {
   if (!editor) throw new Error("DiffViewer must be used within an EditorContext")
 
   return (
-    <div className="w-full min-h-[80vh]">
+    <div className="w-full">
       <header className="px-2 py-2">
         <H2>Diff Viewer</H2>
       </header>
@@ -259,21 +261,23 @@ export function DiffViewer() {
         </SettingsItemGroup>
         <SettingsItemGroup>
           <SettingsItemLabel>Layout</SettingsItemLabel>
-          <TabBlock
-          >
-            {[ "split", "inline" ].map((layout) => {
-              return <TabItem
-                key={layout}
-                active={editor.settings.layout === layout}
-                onClick={() => editor.setSettings({
-                  ...editor.settings,
-                  layout: layout as EditorSetting[ "layout" ]
-                })}
-              >
-                {layout[ 0 ].toUpperCase() + layout.slice(1)}
-              </TabItem>
-            })}
-          </TabBlock>
+          <TabList
+            id="footer"
+            className="p-1 tab-item:p-1 tab-item:px-3 tab-item:grow tab-item:text-center [&_svg]:w-4 [&_svg]:h-4"
+            tabs={[
+              tab(<div>Split</div>),
+              tab(<div>Inline</div>),
+            ]}
+            onTabChange={(label, index) => {
+              const layout = index === 0 ? "split" : "inline"
+              editor.setSettings({
+                ...editor.settings,
+                layout
+              })
+            }}
+            tabNum={editor.settings.layout === "split" ? 0 : 1}
+            // tabNum={tabNum}
+          />
         </SettingsItemGroup>
         <SettingsItemGroup>
           <SettingsItemLabel>Theme</SettingsItemLabel>

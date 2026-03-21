@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root {
+/* :root {
   --background: #ececef;
   --background-input: #dddde2;
   --foreground: #171717;
@@ -11,14 +11,32 @@
     --background-input: #232220;
     --foreground: #ededed;
   }
-}
+} */
 
-@theme {
+@theme inline {
+  --foreground: light-dark(
+    #171717,
+    #ededed
+  );
+  --background: light-dark(
+    #ececef,
+    #0b0a0a
+  );
+  --color-foreground-muted: light-dark(
+    var(--color-slate-500),
+    color-mix(in srgb, var(--foreground) 65%, var(--background))
+  );
+  --background-input: light-dark(
+    #d6d6e3,
+    #232220
+  );
+
   --color-foreground: var(--foreground);
-  --color-foreground-muted: color-mix(in srgb, var(--foreground) 65%, var(--background));
-  
   --color-background: var(--background);
   --color-background-input: var(--background-input);
+  --color-background-muted: var(--background-input);
+  --color-background-card: var(--background);
+
   
   --color-active-outline: color-mix(in srgb, var(--foreground) 25%, var(--background));
 
@@ -41,7 +59,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
 @utility button {
   @apply block
   shrink-0
@@ -50,4 +67,35 @@ body {
   cursor-pointer
   hover:bg-foreground/5 rounded
   flex items-center gap-2
+}
+
+@utility tab {
+  @apply flex w-auto 
+  flex-wrap p-1.5 rounded-xl text-sm select-none isolate
+  bg-background-muted;
+}
+@utility tab-card {
+  @apply bg-background-muted/80;
+}
+@custom-variant tab-item (& .tab-item);
+@utility tab-item {
+  @apply px-5 p-2
+  text-foreground-muted 
+  font-medium
+  text-nowrap 
+  cursor-pointer group-data-active:cursor-auto
+
+  hover:text-foreground;
+
+  &[data-active] {
+    @apply text-foreground;
+  }
+}
+
+@custom-variant tab-background (& .tab-background);
+@utility tab-background {
+  @apply absolute top-0 left-0 w-full h-full
+  pointer-events-none -z-10 
+  rounded-lg shadow-xs
+  bg-background-card;
 }
