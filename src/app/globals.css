@@ -7,8 +7,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0d0d0d;
-    --background-input: #1c1c1c;
+    --background: #0b0a0a;
+    --background-input: #232220;
     --foreground: #ededed;
   }
 }

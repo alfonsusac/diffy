@@ -27,7 +27,7 @@ export default function Home() {
             </div>
           </header>
 
-          <section className="h-80 bg-red-500- px-4 sm:px-6">
+          <section className="h-140 sm:h-80 bg-red-500- px-4 sm:px-6">
             <div className="max-w-5xl bg-blue-500- h-full mx-auto flex flex-col sm:flex-row gap-x-8 gap-y-10">
               {[ "a" as const, "b" as const ].map((which) => {
                 return (<Editor key={which} which={which} />)
@@ -48,7 +48,7 @@ export default function Home() {
 
             <div className="text-foreground-muted">
               Made by alfon ∙ {[
-                { label: 'github', href: '' },
+                { label: 'github', href: 'https://github.com/alfonsusac/diffy' },
               ].map(({ label, href }) => {
                 return <a key={label} href={href}
                   className="text-foreground-muted hover:text-foreground transition-colors"

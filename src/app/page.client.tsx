@@ -183,7 +183,8 @@ export function DiffViewer() {
       {/* Settings */}
       <div className={cn(
         "w-full bg-background sticky bottom-0 mt-4 flex flex-wrap gap-8",
-        "border-t border-foreground/10 p-4 px-0 pb-10"
+        "border-t border-foreground/10 p-4 px-0 pb-10",
+        "z-5",
       )}>
         <SettingsItemGroup>
           <SettingsItemLabel>Language</SettingsItemLabel>
