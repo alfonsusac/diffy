@@ -18,16 +18,25 @@ export default function Home() {
             <h1 className={cn("font-mono text-4xl sm:text-5xl",
               "font-semibold tracking-tighter",
               "bg-gradient-to-t bg-clip-text text-transparent",
-              "from-zinc-500 to-zinc-50"
+              "from-zinc-500 to-zinc-50",
+              "transition-[opacity,translate] duration-500",
+              "starting:opacity-0 starting:translate-y-4"
             )}>
               diffy
             </h1>
-            <div className="sm:text-xl text-foreground-muted text-pretty max-w-120">
+            <div className={cn("sm:text-xl text-foreground-muted text-pretty max-w-120",
+              "transition-[opacity,translate] duration-500 delay-100",
+              "starting:opacity-0 starting:translate-y-4",
+            )}>
               Easily compare two text files and see the differences side by side powered by <span className="font-mono text-foreground">@pierre/diffs</span>
             </div>
           </header>
 
-          <section className="h-140 sm:h-80 bg-red-500- px-4 sm:px-6">
+          <section className={cn(
+            "h-140 sm:h-80 bg-red-500- px-4 sm:px-6",
+            "transition-[opacity,translate] duration-500 delay-250",
+            "starting:opacity-0 starting:translate-y-4"
+          )}>
             <div className="max-w-5xl bg-blue-500- h-full mx-auto flex flex-col sm:flex-row gap-x-8 gap-y-10">
               {[ "a" as const, "b" as const ].map((which) => {
                 return (<Editor key={which} which={which} />)
@@ -35,7 +44,11 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="bg-red-500- px-4 sm:px-6">
+          <section className={cn(
+            "bg-red-500- px-4 sm:px-6",
+            "transition-[opacity,translate] duration-500 delay-400",
+            "starting:opacity-0 starting:translate-y-4"
+          )}>
             <div className="max-w-5xl bg-blue-500- h-full mx-auto flex flex-col sm:flex-row gap-x-8 gap-y-4 ">
               <DiffViewer />
             </div>
@@ -45,7 +58,6 @@ export default function Home() {
 
         <footer className="border-t border-t-foreground/5 pb-20">
           <div className="max-w-3xl mx-auto p-8 flex flex-col gap-4">
-
             <div className="text-foreground-muted">
               Made by alfon ∙ {[
                 { label: 'github', href: 'https://github.com/alfonsusac/diffy' },

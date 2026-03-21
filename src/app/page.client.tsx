@@ -194,6 +194,8 @@ export function DiffViewer() {
         "w-full bg-background sticky bottom-0 mt-4 flex flex-wrap gap-8",
         "border-t border-foreground/10 p-4 px-0 pb-10",
         "z-5",
+        "transition-[opacity,translate] duration-500 delay-600",
+        "starting:opacity-0 starting:translate-y-10"
       )}>
         <SettingsItemGroup>
           <SettingsItemLabel>Language</SettingsItemLabel>
