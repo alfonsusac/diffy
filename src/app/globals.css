@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ececef;
+  --background-input: #dddde2;
+  --foreground: #171717;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d0d0d;
+    --background-input: #1c1c1c;
+    --foreground: #ededed;
+  }
+}
+
+@theme {
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: color-mix(in srgb, var(--foreground) 65%, var(--background));
+  
+  --color-background: var(--background);
+  --color-background-input: var(--background-input);
+  
+  --color-active-outline: color-mix(in srgb, var(--foreground) 25%, var(--background));
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --text-2xs: 0.625rem;
+}
+
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@utility button {
+  @apply block
+  shrink-0
+  text-xs p-2 px-3
+  text-foreground-muted hover:text-foreground
+  cursor-pointer
+  hover:bg-foreground/5 rounded
+  flex items-center gap-2
+}
