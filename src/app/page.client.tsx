@@ -142,7 +142,7 @@ export function Editor(props: {
           accept=".txt,.md,.json,.js,.ts,.css,.html,.xml"
         />
       </div>
-      <div className="relative h-full rounded border border-foreground/5 overflow-hidden"
+      <div className="relative h-full rounded-md border border-foreground/10 overflow-hidden"
         onDragOver={(e) => {
           e.preventDefault()
           setHovering(true)
@@ -185,7 +185,7 @@ export function Editor(props: {
           onChange={(e) => editor.setValue(props.which, e.target.value)}
           className={cn(
             "bg-background-input/50",
-            "border border-foreground/5",
+            // "border border-foreground/5",
             "focus-visible:outline-active-outline",
             "focus-visible:outline-1",
             "rounded p-3 h-full w-full resize-none font-mono text-sm",
