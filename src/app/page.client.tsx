@@ -42,8 +42,6 @@ export function EditorContext(props: {
       localStorage.setItem("valueB", value)
       setValueB(value)
     }
-
-    //
   }
 
   const [ settings, _setSettings ] = useState<EditorSetting>({
