@@ -1,49 +1,42 @@
 @import "tailwindcss";
 
-/* :root {
-  --background: #ececef;
-  --background-input: #dddde2;
-  --foreground: #171717;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b0a0a;
-    --background-input: #232220;
-    --foreground: #ededed;
-  }
-} */
-
 @theme inline {
-  --foreground: light-dark(
+  --color-foreground: light-dark(
     #171717,
     #ededed
   );
-  --background: light-dark(
+  --color-background: light-dark(
     #ececef,
     #0b0a0a
   );
   --color-foreground-muted: light-dark(
     var(--color-slate-500),
-    color-mix(in srgb, var(--foreground) 65%, var(--background))
+    color-mix(in srgb, var(--color-foreground) 65%, var(--color-background))
   );
-  --background-input: light-dark(
+  --color-background-input: light-dark(
     #d6d6e3,
     #232220
   );
-
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --color-background-input: var(--background-input);
-  --color-background-muted: var(--background-input);
-  --color-background-card: var(--background);
-
+  --color-background-muted: var(--color-background-input);
+  --color-background-card: var(--color-background);
   
-  --color-active-outline: color-mix(in srgb, var(--foreground) 25%, var(--background));
+  --color-active-outline: color-mix(in srgb, var(--color-foreground) 25%, var(--color-background));
 
-  --color-input: var(--background-input);
-  --color-popover: var(--background-input);
-  --color-accent: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  --color-input: var(--color-background-input);
+  --color-popover: light-dark(
+    var(--color-background),
+    var(--color-background-input)
+  );
+  --color-accent: light-dark(
+    color-mix(in srgb, #d6d6e3 50%, transparent),
+    color-mix(in srgb, var(--color-foreground) 20%, var(--color-background))
+  );
+  
   --color-border: green;
+  --color-ring: light-dark(
+    var(--color-slate-400),
+    color-mix(in srgb, var(--color-foreground) 50%, var(--color-background))
+  );
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -54,8 +47,8 @@
 
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -63,7 +56,8 @@ body {
   @apply block
   shrink-0
   text-xs p-2 px-3
-  text-foreground-muted hover:text-foreground
+  text-foreground-muted 
+  hover:text-foreground
   cursor-pointer
   hover:bg-foreground/5 rounded
   flex items-center gap-2

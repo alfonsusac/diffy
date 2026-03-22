@@ -185,7 +185,6 @@ export function Editor(props: {
           onChange={(e) => editor.setValue(props.which, e.target.value)}
           className={cn(
             "bg-background-input/50",
-            // "border border-foreground/5",
             "focus-visible:outline-active-outline",
             "focus-visible:outline-1",
             "rounded p-3 h-full w-full resize-none font-mono text-sm",
@@ -281,7 +280,8 @@ export function DiffViewer() {
         </SettingsItemGroup>
         <SettingsItemGroup>
           <SettingsItemLabel>Theme</SettingsItemLabel>
-          <Select value={
+          <Select
+            value={
             editor.settings.theme
           } onValueChange={
             (value) => editor.setSettings({
