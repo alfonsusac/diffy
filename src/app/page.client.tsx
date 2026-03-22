@@ -56,8 +56,16 @@ fn add(a: i32, b: i32) -> i32 {
 }`)
 
   const setValue = (which: "a" | "b", value: string) => {
-    if (which === "a") setValueA(value)
-    else setValueB(value)
+    if (which === "a") {
+      localStorage.setItem("valueA", value)
+      setValueA(value)
+    }
+    else {
+      localStorage.setItem("valueB", value)
+      setValueB(value)
+    }
+
+    //
   }
 
   const [ settings, _setSettings ] = useState<EditorSetting>({
@@ -69,9 +77,11 @@ fn add(a: i32, b: i32) -> i32 {
   useEffect(() => {
     if (typeof window === "undefined") return
     const savedSettings = localStorage.getItem("editor-settings")
-    if (savedSettings) {
-      _setSettings(JSON.parse(savedSettings))
-    }
+    if (savedSettings) _setSettings(JSON.parse(savedSettings))
+    const valueA = localStorage.getItem("valueA")
+    if (valueA) setValueA(valueA)
+    const valueB = localStorage.getItem("valueB")
+    if (valueB) setValueB(valueB)
   }, [])
 
   function setSettings(settings: EditorSetting) {
@@ -282,13 +292,13 @@ export function DiffViewer() {
           <SettingsItemLabel>Theme</SettingsItemLabel>
           <Select
             value={
-            editor.settings.theme
-          } onValueChange={
-            (value) => editor.setSettings({
-              ...editor.settings,
-              theme: value as CodeThemes
-            })
-          }>
+              editor.settings.theme
+            } onValueChange={
+              (value) => editor.setSettings({
+                ...editor.settings,
+                theme: value as CodeThemes
+              })
+            }>
             <SelectTrigger className="w-40">
               <SelectValue placeholder="Select a theme..." className="capitalize" />
             </SelectTrigger>
@@ -380,6 +390,62 @@ function CopyButton(props: {
       <IconLucideCopy />
       <span ref={buttonTextRef}>
         Copy
+      </span>
+    </button >
+  )
+}
+
+
+export function LoadExampleButton() {
+  const editor = use(editorContext)
+  return (
+    <button className={cn("button-primary")}
+      onClick={(e) => {
+        editor?.setValue("a", `fn main() {
+    println!("What is your name?");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).unwrap();
+    println!("Hello, {}", name.trim());
+}
+
+fn add(x: i32, y: i32) -> i32 {
+    return x + y;
+}`)
+        editor?.setValue('b', `use std::io;
+
+fn main() {
+    println!("Enter your name:");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).expect("read error");
+    println!("Hello, {}!", name.trim());
+}
+
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}`)
+      }}
+    >
+      <IconLucideCopy />
+      <span>
+        Load Example
+      </span>
+    </button >
+  )
+}
+
+
+export function ClearAllButton() {
+  const editor = use(editorContext)
+  return (
+    <button className={cn("button-primary")}
+      onClick={(e) => {
+        editor?.setValue("a", ``)
+        editor?.setValue('b', ``)
+      }}
+    >
+      <IconLucideCopy />
+      <span>
+        Clear All
       </span>
     </button >
   )

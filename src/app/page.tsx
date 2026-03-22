@@ -1,5 +1,5 @@
 import { cn } from "lazy-cn"
-import { DiffViewer, Editor, EditorContext } from "./page.client"
+import { ClearAllButton, DiffViewer, Editor, EditorContext, LoadExampleButton } from "./page.client"
 import type { Metadata } from "next"
 import { ThemeSwitcher } from "./feature-themes"
 import type { ComponentProps } from "react"
@@ -34,6 +34,10 @@ export default function Home() {
               Easily compare two text files and see the differences
               side by side powered
               by{' '}<a className="font-mono text-foreground underline underline-offset-8 decoration-foreground/5 hover:decoration-foreground-muted" href="https://diffs.com/" target="_blank">@pierre/diffs</a>
+              <div className="mt-6 flex gap-2">
+                <LoadExampleButton />
+                <ClearAllButton />
+              </div>
             </div>
           </header>
 
