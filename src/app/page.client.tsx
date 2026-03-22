@@ -125,7 +125,7 @@ export function Editor(props: {
       className="bg-background h-full w-full flex flex-col gap-2"
     >
       <div className="flex items-center px-3">
-        <H2>{editors[ props.which ].label}</H2>
+        <H2>Edit {editors[ props.which ].label}</H2>
         <CopyButton text={props.which === "a" ? editor.valueA : editor.valueB} />
         <button className={cn("button")}
           onClick={() => inputRef.current?.click()}
@@ -205,7 +205,7 @@ export function DiffViewer() {
   return (
     <div className="w-full">
       <header className="px-2 py-2">
-        <H2>Diff Viewer</H2>
+        <H2>Result Diff Viewer</H2>
       </header>
       <MultiFileDiff
         className="border border-foreground/10 rounded-xl overflow-clip"
