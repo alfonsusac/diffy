@@ -146,7 +146,15 @@ export function Editor(props: {
           setHovering(false)
           const file = e.dataTransfer.files?.[ 0 ]
           if (!file) return
-          const isText = file.type.startsWith("text/") || file.name.match(/\.(txt|md|json|js|ts|css|html|xml)$/i)
+          const textMime =
+            file.type.startsWith("text/") ||
+            [
+              "application/json",
+              "application/xml",
+              "application/javascript"
+            ].includes(file.type)
+          const textExt = /\.(txt|md|json|js|ts|jsx|tsx|css|html|xml|yml|yaml|csv|env)$/i.test(file.name)
+          const isText = textMime || textExt
           if (!isText) {
             alert("Please drop a text file.")
             return
