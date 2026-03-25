@@ -21,11 +21,7 @@ export function CodeThemeSelect() {
           {darkthemes
             .toSorted((a, b) => a.localeCompare(b))
             .map((value) => {
-              return <SelectItem
-                className="capitalize"
-                key={value}
-                value={value}
-              >
+              return <SelectItem className="capitalize" key={value} value={value}>
                 {value.replaceAll('-', ' ')}
               </SelectItem>
             })}
@@ -35,11 +31,7 @@ export function CodeThemeSelect() {
           {lightthemes
             .toSorted((a, b) => a.localeCompare(b))
             .map((value) => {
-              return <SelectItem
-                className="capitalize"
-                key={value}
-                value={value}
-              >
+              return <SelectItem className="capitalize" key={value} value={value}>
                 {value.replaceAll('-', ' ')}
               </SelectItem>
             })}

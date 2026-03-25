@@ -27,7 +27,6 @@ export function DiffViewer() {
       <header className="px-2 py-2">
         <h2 className="h2">Result Diff Viewer</h2>
       </header>
-      {/* <DifferArgsDebug /> */}
       <MultiFileDiff
         className="border border-foreground/10 rounded-xl overflow-clip"
         oldFile={{
