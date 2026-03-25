@@ -6,7 +6,7 @@ import { MultiFileDiff } from "@pierre/diffs/react"
 import { cn } from "lazy-cn"
 import { useEditor } from "./app-core"
 import { SettingsItemGroup, SettingsItemLabel } from "./app-editor-ui"
-import { CodeThemeSelect, darkthemes, lightthemes, type CodeThemes } from "./app-differ-themes"
+import { CodeThemeSelect } from "./app-differ-themes"
 
 
 
@@ -15,7 +15,6 @@ export function DiffViewer() {
 
   return (
     <div className="w-full">
-      {JSON.stringify(editor.settings.theme)}
       <header className="px-2 py-2">
         <h2 className="h2">Result Diff Viewer</h2>
       </header>

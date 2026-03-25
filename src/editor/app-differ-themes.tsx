@@ -12,7 +12,7 @@ export function CodeThemeSelect() {
       } onValueChange={
         (value) => editor.setTheme(value as CodeThemes)
       }>
-      <SelectTrigger className="w-40">
+      <SelectTrigger className="w-40 capitalize">
         <SelectValue placeholder="Select a theme..." className="capitalize" />
       </SelectTrigger>
       <SelectContent>
