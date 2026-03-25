@@ -64,12 +64,10 @@ export default function Home() {
               "transition-[opacity,translate] duration-500 delay-400",
               "starting:opacity-0 starting:translate-y-4"
             )}>
-              {/* <WorkerPoolTest /> */}
               <div className="max-w-5xl bg-blue-500- h-full mx-auto flex flex-col sm:flex-row gap-x-8 gap-y-4 ">
                 <DiffViewer />
               </div>
             </section>
-
           </div>
 
           <footer className="border-t border-t-foreground/5 pb-20">

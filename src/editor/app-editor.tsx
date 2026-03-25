@@ -2,7 +2,7 @@
 
 import { CopyButton } from "./ui-copy-buttons"
 import { cn } from "lazy-cn"
-import { IconLucideCopy, LucideDownload } from "@/editor/ui-icons"
+import { IconLucideCopy, LucideDownload, MdiArrowDownRight } from "@/editor/ui-icons"
 import { useEditor } from "./app-core"
 import { SelectLanguage } from "./app-editor-lang-select"
 import { exampleA, exampleB } from "./app-examples"
@@ -19,7 +19,9 @@ export function Editor(props: {
   return (
     <div className="bg-background h-full w-full flex flex-col gap-2">
       <div className="flex items-center px-3">
-        <h2 className="h2">Edit {editor.data[ which ].filename}</h2>
+        <h3 className="h3">Edit {editor.data[ which ].filename}
+          <MdiArrowDownRight className="inline ml-1.5 translate-y-0.5" />
+        </h3>
         <CopyButton className="button" text={editor.data[ which ].content} />
         <UploadButton className="button" id={which} onFileUpload={(text, file) => {
           editor.setContent(which, text)

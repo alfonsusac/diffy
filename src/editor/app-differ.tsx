@@ -8,6 +8,7 @@ import { useEditor } from "./app-core"
 import { SettingsItemGroup, SettingsItemLabel } from "./app-editor-ui"
 import { CodeThemeSelect } from "./app-differ-themes"
 import { getExtFromLang, getLangFromFilename } from "./app-editor-lang"
+import { MdiArrowDownRight } from "./ui-icons"
 
 
 function getResolvedFilename(filename: string | undefined, langid: string | null) {
@@ -25,7 +26,9 @@ export function DiffViewer() {
   return (
     <div className="w-full">
       <header className="px-2 py-2">
-        <h2 className="h2">Result Diff Viewer</h2>
+        <h3 className="h3">Result Diff Viewer
+          <MdiArrowDownRight className="inline ml-1.5 translate-y-0.5" />
+        </h3>
       </header>
       <MultiFileDiff
         className="border border-foreground/10 rounded-xl overflow-clip"

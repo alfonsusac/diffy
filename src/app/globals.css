@@ -70,7 +70,12 @@ body {
   hover:bg-foreground/5
 }
 @utility h2 {
+  @apply text-2xl font-semibold text-foreground-muted/50
+  ;
+}
+@utility h3 {
   @apply font-medium text-sm grow text-foreground-muted
+  ;
 }
 
 @utility tab {
