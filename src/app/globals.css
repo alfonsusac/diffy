@@ -14,7 +14,8 @@
     color-mix(in srgb, var(--color-foreground) 65%, var(--color-background))
   );
   --color-background-input: light-dark(
-    #d6d6e3,
+    #fff,
+    /* #d6d6e3, */
     #232220
   );
   --color-background-muted: var(--color-background-input);
@@ -22,7 +23,11 @@
   
   --color-active-outline: color-mix(in srgb, var(--color-foreground) 25%, var(--color-background));
 
-  --color-input: var(--color-background-input);
+  --color-input: light-dark(
+    #fff,
+    /* var(--color-background-input) */
+    color-mix(in srgb, var(--color-foreground) 5%, var(--color-background))
+  );
   --color-popover: light-dark(
     var(--color-background),
     var(--color-background-input)
@@ -31,8 +36,10 @@
     color-mix(in srgb, #d6d6e3 50%, transparent),
     color-mix(in srgb, var(--color-foreground) 20%, var(--color-background))
   );
-  
-  --color-border: green;
+  --color-border: light-dark(
+    color-mix(in srgb, var(--color-foreground) 50%, var(--color-background)),
+    color-mix(in srgb, var(--color-foreground) 20%, var(--color-background))
+  );
   --color-ring: light-dark(
     var(--color-slate-400),
     color-mix(in srgb, var(--color-foreground) 50%, var(--color-background))

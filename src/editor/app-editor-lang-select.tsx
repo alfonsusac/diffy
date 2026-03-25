@@ -15,6 +15,7 @@ export function SelectLanguage(props: {
       { label: "Unknown", id: "unknown", extensions: [] },
     ]
   }, [])
+
   return (
     <SettingsItemGroup>
       <SettingsItemLabel>Language</SettingsItemLabel>

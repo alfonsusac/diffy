@@ -62,6 +62,8 @@ export function EditorContext(props: {
     overflow: "scroll",
   })
 
+  const [ loaded, setLoaded ] = useState(false)
+
   useEffect(() => {
     try {
       const editorData = localStorage.getItem('editor-data')
@@ -78,8 +80,12 @@ export function EditorContext(props: {
       }
     } catch (error) {
       console.warn("Failed reading editor-settings", getErrorMessage(error))
+    } finally {
+      setLoaded(true)
     }
   }, [])
+
+  if (!loaded) return null
 
   return (
     <editorContext.Provider value={{
