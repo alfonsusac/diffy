@@ -1,14 +1,14 @@
 "use client"
 
-import { getLangFromFilename } from "@/app/feature-settings"
 import { CopyButton, UploadButton } from "./ui-buttons"
 import { cn } from "lazy-cn"
 import { DropzoneDiv } from "./ui-drag-and-drop"
-import { IconLucideCopy, LucideDownload } from "@/app/ui"
+import { IconLucideCopy, LucideDownload } from "@/editor/ui-icons"
 import { useEditor } from "./app-core"
 import { SelectLanguage } from "./app-editor-lang-select"
 import { exampleA, exampleB } from "./app-examples"
 import type { EditorAorB } from "./app-constants"
+import { getLangFromFilename } from "./app-editor-lang"
 
 export function Editor(props: {
   which: EditorAorB,

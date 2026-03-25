@@ -1,9 +1,9 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/ui-select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/editor/ui-select"
 import { SettingsItemGroup, SettingsItemLabel } from "./app-editor-ui"
 import { useEditor } from "./app-core"
-import { getLangFromFilename, languages } from "@/app/feature-settings"
 import { useMemo } from "react"
 import type { EditorAorB } from "./app-constants"
+import { getLangFromFilename, languages } from "./app-editor-lang"
 
 export function SelectLanguage(props: {
   which: EditorAorB

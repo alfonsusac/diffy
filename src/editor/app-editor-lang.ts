@@ -1,14 +1,5 @@
 import { EXTENSION_TO_FILE_FORMAT, getFiletypeFromFileName } from "@pierre/diffs"
-import { grammars } from 'tm-grammars'
-
-// console.log(grammars.map(g => {
-//   return {
-//     id: g.name,
-//     label: g.displayName,
-//   }
-// }))
-// Grammar.name = the id of the grammar
-// Grammar.displayName = the label of the grammar
+import { grammars } from "tm-grammars"
 
 export const languages = Object
   .entries(EXTENSION_TO_FILE_FORMAT as Record<string, string>)

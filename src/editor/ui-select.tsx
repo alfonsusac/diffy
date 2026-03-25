@@ -2,7 +2,7 @@
 import * as React from "react"
 import { Select as SelectPrimitive } from "radix-ui"
 import { cn } from "lazy-cn"
-import { IconLucideCheck, IconLucideChevronDown, IconLucideChevronUp } from "./ui"
+import { IconLucideCheck, IconLucideChevronDown, IconLucideChevronUp } from "./ui-icons"
 
 
 function Select({

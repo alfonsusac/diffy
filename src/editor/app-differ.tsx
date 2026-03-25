@@ -1,7 +1,7 @@
 "use client"
 
-import { tab } from "@/tab/tab-primitives"
-import { TabList } from "@/tab/TabRoot"
+import { tab } from "@/editor/ui-tab-primitives"
+import { TabList } from "@/editor/ui-tab-root"
 import { MultiFileDiff } from "@pierre/diffs/react"
 import { cn } from "lazy-cn"
 import { useEditor } from "./app-core"

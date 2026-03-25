@@ -1,12 +1,7 @@
 "use client"
 
 import { WorkerPoolContextProvider } from "@pierre/diffs/react"
-import { useEffect, type ReactNode } from "react"
-import { useEditor } from "./app-core"
-import { preloadHighlighter } from "@pierre/diffs"
-import { languages } from "@/app/feature-settings"
-import { darkthemes, themes } from "./app-differ-themes"
-import { useAsync } from "@/app/util-async"
+import { type ReactNode } from "react"
 
 export function workerFactory(): Worker {
   return new Worker(

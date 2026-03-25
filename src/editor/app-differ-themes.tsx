@@ -1,4 +1,4 @@
-import { SelectContent, SelectTrigger, SelectValue, SelectGroup, SelectLabel, SelectItem, Select } from "@/app/ui-select"
+import { SelectContent, SelectTrigger, SelectValue, SelectGroup, SelectLabel, SelectItem, Select } from "@/editor/ui-select"
 import { useEditor } from "./app-core"
 import { useWorkerPool } from "@pierre/diffs/react"
 

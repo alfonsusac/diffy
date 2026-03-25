@@ -1,11 +1,11 @@
 "use client"
 
 import { createContext, use, useEffect, useState } from "react"
-import { getErrorMessage } from "@/app/util-async"
+import { getErrorMessage } from "@/editor/util-async"
 import { useWorkerPool } from "@pierre/diffs/react"
-import type { PossibleLanguages } from "@/app/feature-settings"
 import type { CodeThemes } from "./app-differ-themes"
 import { resolveUpdater, type EditorAorB, type Updater } from "./app-constants"
+import type { PossibleLanguages } from "./app-editor-lang"
 
 export type DifferSettings = {
   layout: "split" | "inline",

@@ -1,4 +1,4 @@
-import { IconLucideCopy, IconLucideUpload } from "@/app/ui"
+import { IconLucideCopy, IconLucideUpload } from "@/editor/ui-icons"
 import { useRef, type ComponentProps } from "react"
 
 export function CopyButton(props: {

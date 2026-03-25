@@ -1,7 +1,7 @@
 "use client"
 
-import { tab } from "@/tab/tab-primitives"
-import { TabList } from "@/tab/TabRoot"
+import { tab } from "@/editor/ui-tab-primitives"
+import { TabList } from "@/editor/ui-tab-root"
 import { useEffect, useRef, useState, type SVGProps } from "react"
 // import { TabList } from "./module/tab/TabRoot"
 // import { tab } from "./module/tab/tab-primitives"
