@@ -13,34 +13,42 @@ export function SelectLanguage(props: {
     return [
       ...languages.toSorted((a, b) => a.label.localeCompare(b.label)),
       { label: "Unknown", id: "unknown", extensions: [] },
-      { label: "Mixed", id: "mixed", extensions: [] },
     ]
   }, [])
   return (
     <SettingsItemGroup>
       <SettingsItemLabel>Language</SettingsItemLabel>
-      <Select
-        value={
-          editor.data[ props.which ].langOverride ?? getLangFromFilename(editor.data[ props.which ].filename) ?? "unknown"
+      <div className="flex gap-2">
+        <Select
+          value={
+            editor.data[ props.which ].langOverride ?? getLangFromFilename(editor.data[ props.which ].filename) ?? "unknown"
+          }
+          onValueChange={
+            (value) => editor.setLangOverride(props.which, value === "unknown" ? null : value)
+          }>
+          <SelectTrigger className="w-40">
+            <SelectValue placeholder="Select a langauge..." />
+          </SelectTrigger>
+          <SelectContent>
+            {languageSelections
+              .map(({ label, id, extensions }) => {
+                return <SelectItem key={id} value={id}>
+                  {label}{' '}
+                  {extensions.length !== 0 &&
+                    <span className="font-mono text-xs text-foreground-muted">.{extensions[ 0 ]}</span>
+                  }
+                </SelectItem>
+              })}
+          </SelectContent>
+        </Select>
+        {editor.data[ props.which ].langOverride &&
+          <button className="button"
+            onClick={() => editor.setLangOverride(props.which, null)}
+          >
+            Reset
+          </button>
         }
-        onValueChange={
-          (value) => editor.setLangOverride(props.which, value)
-        }>
-        <SelectTrigger className="w-40">
-          <SelectValue placeholder="Select a langauge..." />
-        </SelectTrigger>
-        <SelectContent>
-          {languageSelections
-            .map(({ label, id, extensions }) => {
-              return <SelectItem key={id} value={id}>
-                {label}{' '}
-                {extensions.length !== 0 &&
-                  <span className="font-mono text-xs text-foreground-muted">.{extensions[ 0 ]}</span>
-                }
-              </SelectItem>
-            })}
-        </SelectContent>
-      </Select>
+      </div>
     </SettingsItemGroup>
   )
 }

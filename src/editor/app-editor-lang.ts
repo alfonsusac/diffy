@@ -50,3 +50,6 @@ export function getLangFromFilename(filename: string | undefined) {
   return lang
 }
 
+export function getExtFromLang(langid: string) {
+  return languages.find(l => l.id === langid)?.extensions[0]
+}

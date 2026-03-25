@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, use, useEffect, useState } from "react"
+import { createContext, use, useEffect, useState, useSyncExternalStore } from "react"
 import { getErrorMessage } from "@/editor/util-async"
 import { useWorkerPool } from "@pierre/diffs/react"
 import type { CodeThemes } from "./app-differ-themes"
@@ -10,6 +10,7 @@ import type { PossibleLanguages } from "./app-editor-lang"
 export type DifferSettings = {
   layout: "split" | "inline",
   theme: CodeThemes,
+  overflow: "scroll" | "wrap"
 }
 
 export type AppEditorData = {
@@ -31,6 +32,7 @@ type EditorContext = {
   setSettings: (data: Updater<DifferSettings>) => void,
   setLayout: (layout: DifferSettings[ 'layout' ]) => void,
   setTheme: (theme: DifferSettings[ 'theme' ]) => void,
+  setOverflow: (theme: DifferSettings[ 'overflow' ]) => void,
   clearAll: () => void,
 }
 
@@ -52,10 +54,12 @@ export function EditorContext(props: {
 }) {
   const workerPool = useWorkerPool()
 
+
   const [ data, _setData ] = useState<AppEditorData>(initialData)
   const [ settings, _setSettings ] = useState<DifferSettings>({
     layout: "split",
-    theme: "vesper"
+    theme: "vesper",
+    overflow: "scroll",
   })
 
   useEffect(() => {
@@ -112,6 +116,11 @@ export function EditorContext(props: {
         console.log("worker pool?", !!workerPool)
         workerPool?.setRenderOptions({ theme })
       },
+      setOverflow(overflow) {
+        this.setSettings(prev => ({ ...prev, overflow }))
+      },
+
+
       clearAll() {
         this.setData(initialData)
       },

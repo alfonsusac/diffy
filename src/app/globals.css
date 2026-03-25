@@ -75,7 +75,7 @@ body {
 
 @utility tab {
   @apply flex w-auto 
-  flex-wrap p-1.5 rounded-xl text-sm select-none isolate
+  flex-wrap p-1 rounded-xl text-sm select-none isolate
   bg-background-muted;
 }
 @utility tab-card {

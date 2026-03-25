@@ -16,7 +16,9 @@ export function HighlightProvider({ children }: { children: ReactNode }) {
   return (
     <WorkerPoolContextProvider
       poolOptions={{ workerFactory }}
-      highlighterOptions={{}}
+      highlighterOptions={{
+        langs: ["text"]
+      }}
     >
       {children}
     </WorkerPoolContextProvider>

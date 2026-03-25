@@ -6,6 +6,7 @@ import { ClearAllButton, Editor, LoadExampleButton } from "@/editor/app-editor"
 import { EditorContext } from "@/editor/app-core"
 import { DiffViewer } from "@/editor/app-differ"
 import { HighlightProvider } from "@/editor/app-differ-worker"
+import { WorkerPoolTest } from "@/editor/app-worker-pool"
 
 
 
@@ -63,6 +64,7 @@ export default function Home() {
               "transition-[opacity,translate] duration-500 delay-400",
               "starting:opacity-0 starting:translate-y-4"
             )}>
+              {/* <WorkerPoolTest /> */}
               <div className="max-w-5xl bg-blue-500- h-full mx-auto flex flex-col sm:flex-row gap-x-8 gap-y-4 ">
                 <DiffViewer />
               </div>
