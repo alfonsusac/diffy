@@ -61,11 +61,16 @@ body {
   cursor-pointer
   hover:bg-foreground/5 rounded
   flex items-center gap-2
+  active:scale-99
+  ;
 }
 @utility button-primary {
   @apply button
   bg-foreground/2
   hover:bg-foreground/5
+}
+@utility h2 {
+  @apply font-medium text-sm grow text-foreground-muted
 }
 
 @utility tab {

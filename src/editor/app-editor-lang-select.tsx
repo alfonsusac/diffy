@@ -1,0 +1,46 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/ui-select"
+import { SettingsItemGroup, SettingsItemLabel } from "./app-editor-ui"
+import { useEditor } from "./app-core"
+import { getLangFromFilename, languages } from "@/app/feature-settings"
+import { useMemo } from "react"
+import type { EditorAorB } from "./app-constants"
+
+export function SelectLanguage(props: {
+  which: EditorAorB
+}) {
+  const editor = useEditor()
+  const languageSelections = useMemo(() => {
+    return [
+      ...languages.toSorted((a, b) => a.label.localeCompare(b.label)),
+      { label: "Unknown", id: "unknown", extensions: [] },
+      { label: "Mixed", id: "mixed", extensions: [] },
+    ]
+  }, [])
+  return (
+    <SettingsItemGroup>
+      <SettingsItemLabel>Language</SettingsItemLabel>
+      <Select
+        value={
+          editor.data[ props.which ].langOverride ?? getLangFromFilename(editor.data[ props.which ].filename) ?? "unknown"
+        }
+        onValueChange={
+          (value) => editor.setLangOverride(props.which, value)
+        }>
+        <SelectTrigger className="w-40">
+          <SelectValue placeholder="Select a langauge..." />
+        </SelectTrigger>
+        <SelectContent>
+          {languageSelections
+            .map(({ label, id, extensions }) => {
+              return <SelectItem key={id} value={id}>
+                {label}{' '}
+                {extensions.length !== 0 &&
+                  <span className="font-mono text-xs text-foreground-muted">.{extensions[ 0 ]}</span>
+                }
+              </SelectItem>
+            })}
+        </SelectContent>
+      </Select>
+    </SettingsItemGroup>
+  )
+}

@@ -1,91 +1,61 @@
-export const languages = [
-  // { label: "Auto-detect", value: "auto" },
-  { label: "TypeScript", value: "tsx" },
-  { label: "JavaScript", value: "js" },
-  { label: "JSON", value: "json" },
-  { label: "CSS", value: "css" },
-  { label: "HTML", value: "html" },
-  { label: "XML", value: "xml" },
-  { label: "Markdown", value: "md" },
-  { label: "YAML", value: "yaml" },
-  { label: "Rust", value: "rs" },
-  { label: "Python", value: "py" },
-  { label: "Go", value: "go" },
-  { label: "Java", value: "java" },
-  { label: "C++", value: "cpp" },
-  { label: "C#", value: "cs" },
-  { label: "PHP", value: "php" },
-  { label: "Plain Text", value: "txt" },
-  { label: "Ruby", value: "rb" },
-] as const
+import { EXTENSION_TO_FILE_FORMAT, getFiletypeFromFileName } from "@pierre/diffs"
+import { grammars } from 'tm-grammars'
 
+// console.log(grammars.map(g => {
+//   return {
+//     id: g.name,
+//     label: g.displayName,
+//   }
+// }))
+// Grammar.name = the id of the grammar
+// Grammar.displayName = the label of the grammar
 
-export const darkthemes = [
-  "pierre-dark",
-  "andromeeda",
-  "aurora-x",
-  "ayu-dark",
-  "catppuccin-frappe",
-  "catppuccin-macchiato",
-  "catppuccin-mocha",
-  "dark-plus",
-  "dracula",
-  "dracula-soft",
-  "everforest-dark",
-  "github-dark",
-  "github-dark-default",
-  "github-dark-dimmed",
-  "github-dark-high-contrast",
-  "gruvbox-dark-hard",
-  "gruvbox-dark-medium",
-  "gruvbox-dark-soft",
-  "houston",
-  "kanagawa-dragon",
-  "kanagawa-wave",
-  "laserwave",
-  "material-theme",
-  "material-theme-darker",
-  "material-theme-ocean",
-  "material-theme-palenight",
-  "min-dark",
-  "monokai",
-  "night-owl",
-  "nord",
-  "one-dark-pro",
-  "plastic",
-  "poimandres",
-  "red",
-  "rose-pine",
-  "rose-pine-moon",
-  "slack-dark",
-  "solarized-dark",
-  "synthwave-84",
-  "tokyo-night",
-  "vesper",
-  "vitesse-black",
-  "vitesse-dark"
-] as const
+export const languages = Object
+  .entries(EXTENSION_TO_FILE_FORMAT as Record<string, string>)
+  .reduce(
+    (acc, [ file_ext, grammar_id ]) => {
+      const existing = acc.find(l => l.id === grammar_id)
+      if (!existing) {
+        const label = grammars.find(gr => gr.name === grammar_id || gr.aliases?.some(al => al === grammar_id))?.displayName
+        if (!label) return acc
+        // if (!label) throw new Error(`The language from EXTENSION_TO_FILE_FORMAT's value: ${value} is not found in Shiki's keyof bundledLanguagesInfo.`)
+        acc.push({
+          id: grammar_id,
+          extensions: [ file_ext ],
+          label: label,
+        })
+      } else {
+        existing.extensions.push(file_ext)
+      }
+      return acc
+    },
+    [] as {
+      label: string,
+      id: string,
+      extensions: string[],
+    }[]
+  )
 
-export const lightthemes = [
-  "pierre-light",
-  "catppuccin-latte",
-  "everforest-light",
-  "github-light",
-  "github-light-default",
-  "github-light-high-contrast",
-  "gruvbox-light-hard",
-  "gruvbox-light-medium",
-  "gruvbox-light-soft",
-  "kanagawa-lotus",
-  "light-plus",
-  "material-theme-lighter",
-  "min-light",
-  "one-light",
-  "rose-pine-dawn",
-  "slack-ochin",
-  "snazzy-light",
-  "solarized-light",
-  "vitesse-light"
-] as const
+export type PossibleLanguages = typeof languages[ number ][ "id" ] | null
 
-export type CodeThemes = typeof darkthemes[number] | typeof lightthemes[number]
+export function getLangFromTwoFileNames(filenameA: string | undefined, filenameB: string | undefined) {
+  const langIdA = getFiletypeFromFileName(filenameA ?? "")
+  const langA = languages.find(l => l.id === langIdA)
+
+  const langIdB = getFiletypeFromFileName(filenameB ?? "") // falls back to "text"
+  const langB = languages.find(l => l.id === langIdB)
+
+  if (langA !== langB) return {
+    label: "Mixed",
+    id: "mixed",
+    extensions: []
+  }
+  return langA
+}
+
+export function getLangFromFilename(filename: string | undefined) {
+  const langId = getFiletypeFromFileName(filename ?? "")
+  const lang = languages.find(l => l.id === langId)?.id ?? "unknown"
+  return lang
+}
+
